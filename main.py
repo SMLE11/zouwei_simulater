@@ -1,6 +1,8 @@
 import sys
 import pygame as pg
 from setting import Setting
+from ship import Ship
+
 
 class AlienInvasion:
 
@@ -21,3 +23,4 @@ class AlienInvasion:
 if __name__ == '__main__':
     ai = AlienInvasion()
     ai.run_game()
+    ship = Ship()
