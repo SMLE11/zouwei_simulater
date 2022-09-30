@@ -7,16 +7,16 @@ import pygame as pg
 
 class Bullet(Sprite):
 
-    def __init__(self, game, move_to_pos):
+    def __init__(self, game, pos, move_to_pos):
         super().__init__()
         self.screen = game.screen
         self.setting = game.setting
         self.image = pg.transform.scale(pg.image.load(self.setting.bullet_image_filepath),
                                         self.setting.bullet_image_size)
         self.rect = self.image.get_rect()
-        self.rect.center = game.player.rect.center
-        self.move_to_pos = move_to_pos
-        self.pos = pg.Vector2(float(self.rect.centerx), float(self.rect.centery))
+        self.rect.center = pos
+        self.move_to_pos = pg.Vector2(move_to_pos)
+        self.pos = pg.Vector2(pos)
         dist = self.move_to_pos - self.pos
         if dist:
             dist.normalize_ip()

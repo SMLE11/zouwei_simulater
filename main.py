@@ -33,7 +33,7 @@ class Game:
                 if event.key == pg.K_ESCAPE:
                     sys.exit()
                 elif event.key == pg.K_q:
-                    self.fire(pg.Vector2(self.ptr.rect.x, self.ptr.rect.y))
+                    self.fire((self.ptr.rect.x, self.ptr.rect.y))
                 elif event.key == pg.K_0:
                     self.create_enemy()
             elif event.type == pg.MOUSEBUTTONDOWN:
@@ -44,7 +44,7 @@ class Game:
         self.enemies.add(enemy)
 
     def fire(self, move_to_pos):
-        bullet = Bullet(self, move_to_pos)
+        bullet = Bullet(self, self.player.rect.center, move_to_pos)
         self.bullets.add(bullet)
 
     def _check_collide_bullet_enemy(self):
