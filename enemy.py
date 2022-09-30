@@ -12,6 +12,7 @@ class Enemy(Sprite):
         self.image = pg.transform.scale(pg.image.load(game.setting.enemy_image_filepath),
                                         game.setting.enemy_image_size)
         self.setting = game.setting
+        self.speed = self.setting.enemy_speed
         self.rect = self.image.get_rect()
         num_start_pos = random.randint(1, 4)
         if num_start_pos == 1:
@@ -45,3 +46,4 @@ class Enemy(Sprite):
             self.move_to_pos = pg.Vector2(random.randint(0, self.setting.screen_width),
                                           random.randint(0, self.setting.screen_width))
         self.rect.center = self.pos
+

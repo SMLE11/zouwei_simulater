@@ -7,6 +7,7 @@ from setting import Setting
 from player import Player
 from pointer import Point
 from bullet import Bullet
+from enemy import Enemy
 
 
 class Game:
@@ -21,7 +22,7 @@ class Game:
         self.player = Player(self)
         self.ptr = Point(self)
         self.bullets = pg.sprite.Group()
-        self.bullets = pg.sprite.Group()
+        self.enemies = pg.sprite.Group()
 
     def _check_events(self):
         for event in pg.event.get():
@@ -33,16 +34,26 @@ class Game:
                     sys.exit()
                 elif event.key == pg.K_q:
                     self.fire(pg.Vector2(self.ptr.rect.x, self.ptr.rect.y))
+                elif event.key == pg.K_0:
+                    self.create_enemy()
             elif event.type == pg.MOUSEBUTTONDOWN:
                 self.player.move_to_pos = pg.Vector2(event.pos)
+
+    def create_enemy(self):
+        enemy = Enemy(self)
+        self.enemies.add(enemy)
 
     def fire(self, move_to_pos):
         bullet = Bullet(self, move_to_pos)
         self.bullets.add(bullet)
 
+    def _check_collide_bullet_enemy(self):
+        pg.sprite.groupcollide(self.bullets,self.enemies,True,True)
+
     def _update(self):
         self.player.update()
         self.bullets.update()
+        self.enemies.update()
 
     def _draw(self):
         self.screen.fill(self.setting.bg_color)
@@ -54,8 +65,11 @@ class Game:
                 bullet.blitme()
             else:
                 self.bullets.remove(bullet)
+        for enemy in self.enemies.sprites():
+            enemy.blitme()
 
         pg.display.flip()
+        self._check_collide_bullet_enemy()
 
     def run_game(self):
 

@@ -11,7 +11,7 @@ class Setting:
         self.screen_show_mode = pg.FULLSCREEN
         self.bg_color = (255, 255, 255)
         # 玩家类
-        self.player_speed = 1
+        self.player_speed = 0.7
         self.player_image_filepath = 'images/cyr.png'
         self.player_image_size = (60, 80)
         # 鼠标指针类
@@ -20,8 +20,8 @@ class Setting:
         # 玩家子弹类
         self.bullet_image_filepath = 'images/bullet.png'
         self.bullet_image_size = (30, 30)
-        self.bullet_speed = 1
+        self.bullet_speed = 0.4
         # 敌人类
         self.enemy_image_filepath = 'images/zdz.png'
         self.enemy_image_size = (60, 80)
-        self.enemy_speed = 1
+        self.enemy_speed = 0.4

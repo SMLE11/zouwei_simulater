@@ -18,7 +18,8 @@ class Bullet(Sprite):
         self.move_to_pos = move_to_pos
         self.pos = pg.Vector2(float(self.rect.centerx), float(self.rect.centery))
         dist = self.move_to_pos - self.pos
-        dist.normalize_ip()
+        if dist:
+            dist.normalize_ip()
         self.step = self.setting.bullet_speed * dist
         self.alive = True
 
