@@ -31,7 +31,8 @@ class Game:
             elif event.type == pg.MOUSEBUTTONDOWN:
                 self.ship.move_to_pos = pg.Vector2(event.pos)
             if event.type == pygame.MOUSEMOTION:
-                self.ptr.rect=event.pos
+                self.ptr.rect = event.pos
+
     def _update_screem(self):
         self.screen.fill(self.setting.bg_color)
         self.ship.blitme()
