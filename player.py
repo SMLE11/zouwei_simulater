@@ -5,11 +5,12 @@ from math import sqrt
 import pygame as pg
 
 
-class Ship:
-    def __init__(self, ai_game):
-        self.screen = ai_game.screen
-        self.screen_rect = ai_game.screen.get_rect()
-        self.image = pg.transform.scale(pg.image.load('images/ship.JPG'), (20, 20))
+class Player:
+    def __init__(self, game):
+        self.screen = game.screen
+        self.screen_rect = game.screen.get_rect()
+        self.setting = game.setting
+        self.image = pg.transform.scale(pg.image.load(self.setting.player_image_filepath), self.setting.player_image_size)
         self.rect = self.image.get_rect()
         self.rect.midbottom = self.screen_rect.midbottom
         self.pos=pg.Vector2(float(self.rect.centerx), float(self.rect.centery))
@@ -17,9 +18,8 @@ class Ship:
         self.move_up = False
         self.move_down = False
         self.move_left = False
-        self.speed = ai_game.setting.ship_speed
+        self.speed = game.setting.player_speed
         self.move_to_pos = pg.Vector2(self.rect.x, self.rect.y)
-        self.setting = ai_game.setting
 
     def blitme(self):
         self.screen.blit(self.image, self.rect)
@@ -32,7 +32,7 @@ class Ship:
         dist_len=dist.length()
         if dist_len>self.speed:
             dist.normalize_ip()
-            step = self.setting.ship_speed*dist
+            step = self.setting.player_speed * dist
             self.pos+=step
         else:
            self.pos=self.move_to_pos
