@@ -6,9 +6,11 @@ import pygame as pg
 class Point:
     def __init__(self, game):
         self.screen = game.screen
-        self.image = pg.transform.scale(pg.image.load(game.setting.pointer_image_filepath), game.setting.pointer_image_size)
+        self.image = pg.transform.scale(pg.image.load(game.setting.pointer_image_filepath),
+                                        game.setting.pointer_image_size)
         self.rect = self.image.get_rect()
-        self.screen_rect = game.screen.get_rect()
+        self.rect.center = game.screen.get_rect().center
+
 
     def blitme(self):
         self.screen.blit(self.image, self.rect)

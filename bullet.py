@@ -17,13 +17,17 @@ class Bullet(Sprite):
         self.rect.center = game.player.rect.center
         self.move_to_pos = move_to_pos
         self.pos = pg.Vector2(float(self.rect.centerx), float(self.rect.centery))
+        dist = self.move_to_pos - self.pos
+        dist.normalize_ip()
+        self.step = self.setting.bullet_speed * dist
+        self.alive = True
 
     def blitme(self):
         self.screen.blit(self.image, self.rect)
 
     def update(self):
-        dist = self.move_to_pos - self.pos
-        dist.normalize_ip()
-        step = self.setting.bullet_speed * dist
-        self.pos += step
+        self.pos += self.step
         self.rect.center = self.pos
+        if self.rect.centerx < 0 or self.rect.centerx > self.setting.screen_width or self.rect.centery < 0 \
+                or self.rect.centery > self.setting.screen_height:
+            self.alive = False
