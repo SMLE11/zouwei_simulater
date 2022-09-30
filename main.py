@@ -27,7 +27,6 @@ class AlienInvasion:
 
             elif event.type == pg.MOUSEBUTTONDOWN:
                 self.ship.move_to_pos= pg.Vector2(event.pos)
-                self.ship.now_pos= pg.Vector2(self.ship.rect.x, self.ship.rect.y)
 
     def _update_screem(self):
         self.screen.fill(self.setting.bg_color)
