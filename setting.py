@@ -18,3 +18,4 @@ class Setting:
         #玩家子弹类
         self.bullet_image_filepath = 'images/bullet.png'
         self.bullet_image_size = (30, 30)
+        self.bullet_speed = 1

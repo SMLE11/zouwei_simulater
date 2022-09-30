@@ -38,4 +38,3 @@ class Player:
            self.pos=self.move_to_pos
 
         self.rect.center=self.pos
-
