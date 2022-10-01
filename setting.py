@@ -14,14 +14,20 @@ class Setting:
         self.player_speed = 0.7
         self.player_image_filepath = 'images/cyr.png'
         self.player_image_size = (60, 80)
+        self.player_blow_image_filepath = 'images/blowup.png'
+        self.player_blow_image_size = (60, 60)
         # 鼠标指针类
         self.pointer_image_filepath = 'images/mouse.png'
         self.pointer_image_size = (60, 60)
-        # 玩家子弹类
-        self.bullet_image_filepath = 'images/bullet.png'
+        # 子弹类
+        self.bullet_player_image_filepath = 'images/bullet.png'
+        self.bullet_enemy_image_filepath = 'images/enemy_bullet.png'
         self.bullet_image_size = (30, 30)
-        self.bullet_speed = 0.4
+        self.bullet_player_speed = 0.7
+        self.bullet_enemy_speed = 0.4
         # 敌人类
         self.enemy_image_filepath = 'images/zdz.png'
         self.enemy_image_size = (60, 80)
         self.enemy_speed = 0.4
+        self.enemy_fire_freq = 1000  # 越低频率越高
+        self.enemy_create_freq = 1000

@@ -7,12 +7,19 @@ import pygame as pg
 
 class Bullet(Sprite):
 
-    def __init__(self, game, pos, move_to_pos):
+    def __init__(self, game, pos, move_to_pos, flag):
         super().__init__()
         self.screen = game.screen
         self.setting = game.setting
-        self.image = pg.transform.scale(pg.image.load(self.setting.bullet_image_filepath),
-                                        self.setting.bullet_image_size)
+        if flag:
+            self.image = pg.transform.scale(pg.image.load(self.setting.bullet_player_image_filepath),
+                                            self.setting.bullet_image_size)
+            self.speed = self.setting.bullet_player_speed
+        else:
+            self.image = pg.transform.scale(pg.image.load(self.setting.bullet_enemy_image_filepath),
+                                            self.setting.bullet_image_size)
+            self.speed = self.setting.bullet_enemy_speed
+
         self.rect = self.image.get_rect()
         self.rect.center = pos
         self.move_to_pos = pg.Vector2(move_to_pos)
@@ -20,7 +27,7 @@ class Bullet(Sprite):
         dist = self.move_to_pos - self.pos
         if dist:
             dist.normalize_ip()
-        self.step = self.setting.bullet_speed * dist
+        self.step = self.speed * dist
         self.alive = True
 
     def blitme(self):

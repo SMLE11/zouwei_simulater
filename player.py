@@ -10,10 +10,11 @@ class Player:
         self.screen = game.screen
         self.screen_rect = game.screen.get_rect()
         self.setting = game.setting
-        self.image = pg.transform.scale(pg.image.load(self.setting.player_image_filepath), self.setting.player_image_size)
+        self.image = pg.transform.scale(pg.image.load(self.setting.player_image_filepath),
+                                        self.setting.player_image_size)
         self.rect = self.image.get_rect()
         self.rect.midbottom = self.screen_rect.midbottom
-        self.pos=pg.Vector2(float(self.rect.centerx), float(self.rect.centery))
+        self.pos = pg.Vector2(float(self.rect.centerx), float(self.rect.centery))
         self.move_right = False
         self.move_up = False
         self.move_down = False
@@ -28,13 +29,17 @@ class Player:
         self.move()
 
     def move(self):
-        dist = self.move_to_pos-self.pos
-        dist_len=dist.length()
-        if dist_len>self.speed:
+        dist = self.move_to_pos - self.pos
+        dist_len = dist.length()
+        if dist_len > self.speed:
             dist.normalize_ip()
             step = self.setting.player_speed * dist
-            self.pos+=step
+            self.pos += step
         else:
-           self.pos=self.move_to_pos
+            self.pos = self.move_to_pos
 
-        self.rect.center=self.pos
+        self.rect.center = self.pos
+
+    def blow_up(self):
+        self.image = pg.transform.scale(pg.image.load(self.setting.player_blow_image_filepath),
+                                        self.setting.player_blow_image_size)

@@ -14,6 +14,7 @@ class Enemy(Sprite):
         self.setting = game.setting
         self.speed = self.setting.enemy_speed
         self.rect = self.image.get_rect()
+        self.game=game
         num_start_pos = random.randint(1, 4)
         if num_start_pos == 1:
             self.rect.centerx = random.randint(0, self.setting.screen_width)
@@ -35,6 +36,7 @@ class Enemy(Sprite):
         self.screen.blit(self.image, self.rect)
 
     def update(self):
+        self.game.auto_fire(self.rect.center)
         dist = self.move_to_pos - self.pos
         dist_len = dist.length()
         if dist_len > self.speed:
