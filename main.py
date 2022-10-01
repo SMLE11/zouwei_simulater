@@ -17,7 +17,7 @@ class Game:
 
     def __init__(self):
         pg.init()
-        self.setting = Setting()
+        self.setting = Setting(self)
         self.screen = pg.display.set_mode((self.setting.screen_width, self.setting.screen_height))
         self.screen.fill(self.setting.bg_color)
         pg.mouse.set_visible(False)
@@ -30,6 +30,10 @@ class Game:
         self.status = False
         self.button = Button(self, 'Play')
         self.mouse_down_pos = (0, 0)
+
+        clock = pygame.time.Clock()
+        self.CREAT_ENEMY_EVENT = pygame.USEREVENT
+        pygame.time.set_timer(self.CREAT_ENEMY_EVENT, 4000)
 
     def _check_events_wtih_input(self):
         for event in pg.event.get():
@@ -47,6 +51,9 @@ class Game:
                     self.create_enemy()
             elif event.type == pg.MOUSEBUTTONDOWN:
                 self.player.move_to_pos = pg.Vector2(event.pos)
+            if event.type == self.CREAT_ENEMY_EVENT:
+                if self.setting.scale < self.setting.scale_limit and self.status == True:
+                    self.setting.scale += 1
 
     def _check_events_wtihout_input(self):
         self._check_collide_bullet_enemy()
@@ -95,18 +102,34 @@ class Game:
         self.enemies_bullets.update()
         self.enemies.update()
         self.auto_create_enemy()
+        self.setting.update_scale()
 
     def reset(self):
         self.enemies.empty()
         self.bullets.empty()
         self.enemies_bullets.empty()
         self.player.__init__(self)
+        self.setting.scale = 1
+
+    def draw_instructions(self):
+        self.font = pg.font.SysFont(None, 48)
+        lines = ["Exit ESC", "Move Click", "Attack Q"]
+        h = 100
+        for line in lines:
+            self.instructions_image = self.font.render(line, True, (0, 0, 0,), (255, 255, 255))
+            self.instructions_image_rect = self.instructions_image.get_rect()
+            self.instructions_image_rect.x = 0
+            self.instructions_image_rect.y = h
+            self.screen.blit(self.instructions_image, self.instructions_image_rect)
+            h += 30
 
     def _draw(self):
         self.screen.fill(self.setting.bg_color)
         self.player.blitme()
+        self.setting.show_score(self)
         if not self.status:
             self.button.blitme()
+            self.draw_instructions()
         for bullet in self.bullets.sprites():
             if bullet.alive:
                 bullet.blitme()
