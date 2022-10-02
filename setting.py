@@ -39,10 +39,9 @@ class Setting:
     def update_scale(self):
         self.enemy_create_freq = 2300 - 100 * self.scale
         self.enemy_fire_freq = 2300 - 100 * self.scale  # 越低频率越高
-        self.enemy_speed += self.scale * 0.02
-        self.bullet_enemy_speed += self.scale * 0.02
+        self.enemy_speed = 0.4+self.scale * 0.02
+        self.bullet_enemy_speed = 0.4+self.scale * 0.02
         self.scale = self.score // 80
-        print(self.bullet_enemy_speed)
 
     def show_score(self, game):
         self.font = pg.font.SysFont(None, 48)
