@@ -1,8 +1,6 @@
-import random
+from random import  randint
 import sys
-from time import sleep
 
-import pygame
 import pygame as pg
 
 from setting import Setting
@@ -21,7 +19,7 @@ class Game:
         self.screen = pg.display.set_mode((self.setting.screen_width, self.setting.screen_height))
         self.screen.fill(self.setting.bg_color)
         pg.mouse.set_visible(False)
-        pg.display.set_caption('走位模拟器')
+        pg.display.set_caption('zdz入侵')
         self.player = Player(self)
         self.ptr = Point(self)
         self.bullets = pg.sprite.Group()
@@ -30,17 +28,16 @@ class Game:
         self.status = False
         self.button = Button(self, 'Play')
         self.mouse_down_pos = (0, 0)
-
-        clock = pygame.time.Clock()
-        self.CREAT_ENEMY_EVENT = pygame.USEREVENT
-        pygame.time.set_timer(self.CREAT_ENEMY_EVENT, 4000)
+        clock = pg.time.Clock()
+        self.CREAT_ENEMY_EVENT = pg.USEREVENT
+        pg.time.set_timer(self.CREAT_ENEMY_EVENT, 50)
 
     def _check_events_wtih_input(self):
         for event in pg.event.get():
-            if event.type == pygame.MOUSEMOTION:
+            if event.type == pg.MOUSEMOTION:
                 self.ptr.rect.x = event.pos[0]
                 self.ptr.rect.y = event.pos[1]
-            elif event.type == pygame.MOUSEBUTTONDOWN:
+            elif event.type == pg.MOUSEBUTTONDOWN:
                 self.mouse_down_pos = pg.mouse.get_pos()
             if event.type == pg.KEYDOWN:
                 if event.key == pg.K_ESCAPE:
@@ -53,7 +50,7 @@ class Game:
                 self.player.move_to_pos = pg.Vector2(event.pos)
             if event.type == self.CREAT_ENEMY_EVENT:
                 if self.setting.scale < self.setting.scale_limit and self.status == True:
-                    self.setting.scale += 1
+                    self.setting.score += 1
 
     def _check_events_wtihout_input(self):
         self._check_collide_bullet_enemy()
@@ -64,7 +61,7 @@ class Game:
         self.enemies.add(enemy)
 
     def auto_create_enemy(self):
-        num = random.randint(0, self.setting.enemy_create_freq)
+        num = randint(0, self.setting.enemy_create_freq)
         if num == 0:
             self.create_enemy()
 
@@ -73,7 +70,7 @@ class Game:
         self.bullets.add(bullet)
 
     def auto_fire(self, pos):
-        num = random.randint(0, self.setting.enemy_fire_freq)
+        num = randint(0, self.setting.enemy_fire_freq)
         if num == 0:
             bullet = Bullet(self, pos, self.player.rect.center, False)
             self.enemies_bullets.add(bullet)
@@ -109,7 +106,7 @@ class Game:
         self.bullets.empty()
         self.enemies_bullets.empty()
         self.player.__init__(self)
-        self.setting.scale = 1
+        self.setting.score = 0
 
     def draw_instructions(self):
         self.font = pg.font.SysFont(None, 48)

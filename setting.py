@@ -7,7 +7,8 @@ class Setting:
     def __init__(self, game):
         # 游戏难度系数
         self.scale = 0
-        self.scale_limit = 25
+        self.scale_limit = 19
+        self.score = 0
         # 主屏幕
         self.screen_width = 1200
         self.screen_height = 800
@@ -16,7 +17,7 @@ class Setting:
         # 玩家类
         self.player_speed = 0.9
         self.player_image_filepath = 'images/cyr.png'
-        self.player_image_size = (60, 100)
+        self.player_image_size = (45, 75)
         self.player_blow_image_filepath = 'images/blowup.png'
         self.player_blow_image_size = (60, 60)
         # 鼠标指针类
@@ -36,14 +37,16 @@ class Setting:
         self.enemy_create_freq = 2500
 
     def update_scale(self):
-        self.bullet_enemy_speed = 0.4 + 0.05 * self.scale
-        self.enemy_create_freq = 2500 - 100 * self.scale
-        self.enemy_fire_freq = 2500 - 100 * self.scale  # 越低频率越高
-        self.enemy_speed = 0.4 + 0.05 * self.scale
+        self.enemy_create_freq = 2300 - 100 * self.scale
+        self.enemy_fire_freq = 2300 - 100 * self.scale  # 越低频率越高
+        self.enemy_speed += self.scale * 0.02
+        self.bullet_enemy_speed += self.scale * 0.02
+        self.scale = self.score // 80
+        print(self.bullet_enemy_speed)
 
     def show_score(self, game):
         self.font = pg.font.SysFont(None, 48)
-        self.scoreboard_image = self.font.render("score:" + str(self.scale), True, (0, 0, 0,), (255, 255, 255))
+        self.scoreboard_image = self.font.render("score:" + str(self.score), True, (0, 0, 0,), (255, 255, 255))
         self.scoreboard_image_rect = self.scoreboard_image.get_rect()
-        self.scoreboard_image_rect.center = (60, 40)
+        self.scoreboard_image_rect.center = (80, 40)
         game.screen.blit(self.scoreboard_image, self.scoreboard_image_rect)

@@ -27,8 +27,10 @@ class Bullet(Sprite):
         dist = self.move_to_pos - self.pos
         if dist:
             dist.normalize_ip()
+            self.alive = True
+        else:
+            self.alive = False
         self.step = self.speed * dist
-        self.alive = True
 
     def blitme(self):
         self.screen.blit(self.image, self.rect)
